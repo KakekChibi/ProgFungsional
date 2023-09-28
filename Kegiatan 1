@@ -1,0 +1,62 @@
+class TreeNode:
+    def _init_(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+# Fungsi penjumlahan
+def add(a, b):
+    return a + b
+
+# Fungsi pengurangan
+def minus(a, b):
+    return a - b
+
+# Fungsi perkalian
+def mult(a, b):
+    return a * b
+
+# Fungsi pembagian
+def div(a, b):
+    if b == 0:
+        return "Tidak dapat membagi dengan nol"
+    else:
+        return a / b
+
+# Fungsi untuk membuat pohon
+def create_tree(node):
+    if isinstance(node, tuple) and len(node) == 3:
+        operator, left_operand, right_operand = node
+        new_node = TreeNode(operator)
+        new_node.left = create_tree(left_operand)
+        new_node.right = create_tree(right_operand)
+        return new_node
+    else:
+        return TreeNode(node)  # Operand (bilangan)
+
+# Fungsi untuk melakukan perhitungan berdasarkan pohon
+def evaluate_tree(node):
+    if isinstance(node, TreeNode):
+        if node.value in {'+', '-', '*', '/'}:
+            left_result = evaluate_tree(node.left)
+            right_result = evaluate_tree(node.right)
+            if node.value == '+':
+                return add(left_result, right_result)
+            elif node.value == '-':
+                return minus(left_result, right_result)
+            elif node.value == '*':
+                return mult(left_result, right_result)
+            elif node.value == '/':
+                return div(left_result, right_result)
+    else:
+        return float(node)  # Operand (bilangan)
+
+# Contoh ekspresi: (2 + 3) * (5 - 1)
+expression_tree = (('2', '+', '3'), '*', ('5', '-', '1'))
+
+# Membuat pohon
+tree = create_tree(expression_tree)
+
+# Evaluasi pohon ekspresi
+result = evaluate_tree(tree)
+print("Hasil evaluasi pohon ekspresi:", result)  # Hasil: 20.0
