@@ -1,0 +1,31 @@
+random_list = [105, 3.1, "Hello", 737, "Python", 2.7, "World", 412, 5.5, "A1"]
+
+int_dict = {
+    'ratusan': [],
+    'puluhan': [],
+    'satuan': []
+}
+
+float_tuple = ()
+string_list = []
+
+for item in random_list:
+    if isinstance(item, int):
+        # Pecah angka menjadi ratusan, puluhan, dan satuan
+        ratusan = item // 100
+        sisa_ratusan = item % 100
+        puluhan = sisa_ratusan // 10
+        satuan = sisa_ratusan % 10
+        
+        int_dict['ratusan'].append(ratusan)
+        int_dict['puluhan'].append(puluhan)
+        int_dict['satuan'].append(satuan)
+    elif isinstance(item, float):
+        float_tuple += (item,)
+    elif isinstance(item, str):
+        string_list.append(item)
+
+# Menampilkan hasil
+print("Data int (dicteonary):", int_dict)
+print("Data float (tuple):", float_tuple)
+print("Data string (list):", string_list)
